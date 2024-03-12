@@ -239,21 +239,21 @@
         <nav class="nav">
             <div>
                 <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i><span
-                    class="nav_logo-name">BBBootstrap</span> </a>
-            <div class="nav_list">
-                <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span
-                        class="nav_name">Dashboard</span> </a>
-                <a href="category" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span
-                        class="nav_name">Category</span> </a>
-                <a href="product" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span
-                        class="nav_name">Product</span> </a>
-                <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span
-                        class="nav_name">Bookmark</span> </a>
-                <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span
-                        class="nav_name">Files</span> </a>
-                <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span
-                        class="nav_name">Stats</span> </a>
-            </div>
+                        class="nav_logo-name">BBBootstrap</span> </a>
+                <div class="nav_list">
+                    <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span
+                            class="nav_name">Dashboard</span> </a>
+                    <a href="category" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span
+                            class="nav_name">Category</span> </a>
+                    <a href="product" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span
+                            class="nav_name">Product</span> </a>
+                    <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span
+                            class="nav_name">Bookmark</span> </a>
+                    <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span
+                            class="nav_name">Files</span> </a>
+                    <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span
+                            class="nav_name">Stats</span> </a>
+                </div>
             </div>
             <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
                     class="nav_name">SignOut</span> </a>
@@ -297,72 +297,141 @@
                             <tr>
                                 <th class="bg-secondary text-light">ID</th>
                                 <th class="bg-secondary text-light">product Name</th>
-                                <th class="bg-secondary text-light">Description</th>
+                                <th class="bg-secondary text-light">User Name</th>
+                                <th class="bg-secondary text-light">Category Name</th>
+                                <th class="bg-secondary text-light">detia</th>
+                                <th class="bg-secondary text-light">price</th>
+                                <th class="bg-secondary text-light"> Discount</th>
+                                <th class="bg-secondary text-light">Day Wrranty</th>
+                                <th class="bg-secondary text-light">status</th>
                                 <th class="bg-secondary text-light">Action</th>
+                                <th class="bg-secondary text-light">photo</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach ($categories as $category)
+                            @foreach ($products as $product)
                                 <tr>
-                                    <td>{{ $category->id }}</td>
-                                    <td>{{ $category->names }}</td>
-                                    <td>{{ $category->status }}</td>
+                                    <td>{{ $product->id }}</td>
+                                    <td>{{ $product->names }}</td>
+                                    <td>{{ $product->user_name }}</td>
+                                    <td>{{ $product->category_name }}</td>
+                                    <td>{{ $product->detail }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>{{ $product->discount }}</td>
+                                    <td>{{ $product->day_warranty }}</td>
+                                    <td>{{ $product->status }}</td>
+                                    <td><img src="/photo/{{ $product->photo }}" width="40px" class="img-thumbnail"
+                                            alt=""></td>
                                     <td>
                                         <button
                                             class="btn btn-warning btn-sm btn-flat text-light pt-0 rounded-pill pr-3 pl-3  pb-0 bg-info text-warning"
-                                            data-bs-toggle="modal" data-bs-target="#edit{{ $category->id }}"> <i
+                                            data-bs-toggle="modal" data-bs-target="#edit{{ $product->id }}"> <i
                                                 class="fa fa-edit"></i>
                                         </button>
                                         <button
                                             class="btn btn-danger btn-sm btn-flat pt-0 pr-3  rounded-pill pl-3 pb-0 bg-info text-danger"
-                                            data-bs-toggle="modal" data-bs-target="#delete{{ $category->id }}">
+                                            data-bs-toggle="modal" data-bs-target="#delete{{ $product->id }}">
                                             <i class="fa fa-trash-o"></i>
                                         </button>
                                     </td>
                                 </tr>
                                 {{-- edit modal --}}
-                                <div class="modal fade" id="edit{{ $category->id }}" tabindex="-1"
+                                <div class="modal fade" id="edit{{ $product->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header bg-warning">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Modal</h1>
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Insert Modal</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <form method="POST" enctype="multipart/form-data"
-                                                action="{{ route('categories_update', $category->id) }}">
+                                                action="{{ route('product_update', $product->id) }}">
                                                 @csrf
-                                                <div class="modal-body bg-secondary text-light">
-                                                    {{-- <div class="form-group">
-                                                        <label for="form-label">Categories ID</label>
-                                                        <input type="text" value="{{ $category->id }}"
-                                                            name="txtid" disabled required class="form-control">
-                                                    </div> --}}
+                                                <input type="hidden" name="id" value="{{ $product->id }}">
+                                                <div class="modal-body text-light bg-secondary">
                                                     <div class="form-group">
-                                                        <label for="form-label">Categories Name</label>
-                                                        <input type="text" value="{{ $category->names }}"
-                                                            name="txtname" required class="form-control">
+                                                        <label for="form-label">producgt name</label>
+                                                        <input type="text" class="form-control" required value="{{ $product->names }}"
+                                                            name="txtproname">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="form-label">Status</label>
-                                                        <input type="text" value="{{ $category->status }}"
-                                                            name="txtstatus" required class="form-control">
+                                                        <label for="txtcatname">Category Name</label>
+                                                        <select name="txtcatname" class="form-control" required>
+                                                            <option value="">-----------select value---------
+                                                            </option>
+                                                            @foreach ($categories as $category)
+                                                                <option value="{{ $category->id }}">
+                                                                    {{ $category->names }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
+                                                <div class="modal-body text-light bg-secondary">
+                                                    <div class="form-group">
+                                                        <label for="form-label">User Name</label>
+                                                        <select name="txtusername" id=""
+                                                            class="form-control" required>
+                                                            <option value="">----------select nvalue----------
+                                                            </option>
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->id }}">
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="form-label"> price</label>
+                                                        <input type="number" class="form-control" required value="{{ $product->price }}"
+                                                            name="txtprice">
+                                                    </div>
 
+                                                </div>
+                                                <div class="modal-body text-light bg-secondary">
+                                                    <div class="form-group">
+                                                        <label for="form-label"> detail</label>
+                                                        <input type="text" class="form-control" required value="{{ $product->detail }}"
+                                                            name="txtdetail">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="form-label"> photo</label>
+                                                        <input type="file" class="form-control" required
+                                                            name="photo">
+                                                            <label for="" class="text-danger">រូបចាស់</label>
+                                                            <img src="photo/{{ $product->photo }}" alt="" width="50px" class="m-2">
+                                                            <input type="hidden" value="{{ $product->photo }}"
+                                                                    name="photo2">
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="form-label"> discount</label>
+                                                        <input type="number" class="form-control" required value="{{ $product->discount }}"
+                                                            name="txtdiscount">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="form-label"> Day</label>
+                                                        <input type="number" class="form-control" required value="{{ $product->day_warranty }}"
+                                                            name="txtday">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="form-label"> Status</label>
+                                                        <input type="number" class="form-control" required value="{{ $product->status }}"
+                                                            name="txtdstatus">
+                                                    </div>
+
+                                                </div>
                                                 <div class="modal-footer bg-secondary">
                                                     <button type="button" class="btn btn-warning text-light"
                                                         data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">edit</button>
+                                                    <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                                 {{-- delete modal --}}
-                                <div class="modal fade" id="delete{{ $category->id }}" tabindex="-1"
+                                {{-- <div class="modal fade" id="delete{{ $category->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -383,15 +452,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             @endforeach
 
                         </tbody>
                     </table>
                     {{-- pagination --}}
-                    <div class="d-flex justify-content-end">
+                    {{-- <div class="d-flex justify-content-end">
                         {!! $categories->links('pagination::bootstrap-5') !!}
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             {{-- save  --}}
@@ -404,16 +473,59 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <form method="POST" enctype="multipart/form-data" action="{{ route('categories_save') }}">
+                        <form method="POST" enctype="multipart/form-data" action="{{ route('product_save') }}">
                             @csrf
                             <div class="modal-body text-light bg-secondary">
                                 <div class="form-group">
-                                    <label for="form-label">Categories Name</label>
-                                    <input type="text" class="form-control" required name="txtname">
+                                    <label for="form-label">producgt name</label>
+                                    <input type="text" class="form-control" required name="txtproname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtcatname">Category Name</label>
+                                    <select name="txtcatname" class="form-control" required>
+                                        <option value="">-----------select value---------</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->names }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-body text-light bg-secondary">
+                                <div class="form-group">
+                                    <label for="form-label">User Name</label>
+                                    <select name="txtusername" id="" class="form-control" required>
+                                        <option value="">----------select nvalue----------</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-label"> price</label>
+                                    <input type="number" class="form-control" required name="txtprice">
+                                </div>
+
+                            </div>
+                            <div class="modal-body text-light bg-secondary">
+                                <div class="form-group">
+                                    <label for="form-label"> detail</label>
+                                    <input type="text" class="form-control" required name="txtdetail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-label"> photo</label>
+                                    <input type="file" class="form-control" required name="photo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-label"> discount</label>
+                                    <input type="number" class="form-control" required name="txtdiscount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-label"> Day</label>
+                                    <input type="number" class="form-control" required name="txtday">
                                 </div>
                                 <div class="form-group">
                                     <label for="form-label"> Status</label>
-                                    <input type="number" class="form-control" required name="txtstatus">
+                                    <input type="number" class="form-control" required name="txtdstatus">
                                 </div>
 
                             </div>
